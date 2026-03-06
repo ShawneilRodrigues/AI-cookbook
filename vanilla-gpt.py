@@ -74,4 +74,14 @@ f.backward()
 print(x.grad)
 print(y.grad)
 '''
+n_embd=16 # latent space size(embedding)
+n_head=4
+n_layer=1
+block_size=16
+head_dim=n_embd//n_head
+matrix= lambda nout,nin,std=0.8:[[value(random.gauss(0,std)) for _ in range(nin)]for _ in range(nout)]
+state_dict={'wte':matrix(vocab_size,n_embd),'wpe': matrix(block_size,n_embd),'lm_head':matrix(vocab_size,n_embd)}
+for i in range(n_layer):
+    state_dict[f'layer{i}.attn_wq']=matrix(n_embd, n_embd)
+    
     
